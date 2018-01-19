@@ -28,8 +28,8 @@ public class TasksListRecyclerViewGetter {
 
     public RecyclerView getRecyclerView(ViewGroup viewGroup, ArrayList<String> arrayList ){
         layoutInflater = activity.getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.tasks_list_recycler_view, viewGroup, false);
-        tasksListRecyclerView = view.findViewById(R.id.rv);
+        tasksListRecyclerView = (RecyclerView) layoutInflater.inflate(R.layout.tasks_list_recycler_view, viewGroup, false);
+//        tasksListRecyclerView = view.findViewById(R.id.rv);
         tasksListRecyclerViewAdapter = new TasksListRecyclerViewAdapter(arrayList, activity);
         tasksListRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         tasksListRecyclerView.setAdapter(tasksListRecyclerViewAdapter);
