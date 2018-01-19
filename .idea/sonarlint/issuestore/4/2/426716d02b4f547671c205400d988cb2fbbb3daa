@@ -1,4 +1,4 @@
 
-‘squid:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¶Õã¼øÿÿÿÿ8óããË,
-msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(²…İÑ
-gsquid:S1192"FDefine a constant instead of duplicating this literal "item " 3 times.(›Â¢«üÿÿÿÿ8•·ŒÌ,
+gsquid:S1192"FDefine a constant instead of duplicating this literal "item " 3 times.(›Â¢«üÿÿÿÿ8·‡Öç,
+‘squid:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¶Õã¼øÿÿÿÿ8·‡Öç,
+tsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(²…İÑ8·‡Öç,

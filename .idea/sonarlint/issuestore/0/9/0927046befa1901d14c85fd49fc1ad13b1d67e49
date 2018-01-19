@@ -1,3 +1,5 @@
 
-•squid:S1319"tThe type of the "arrayList" object should be an interface such as "List" rather than the implementation "ArrayList".(ŒÄî•ùÿÿÿÿ8² ÑË,
-.squid:S2176"Rename this class.(Äß³Ø8² ÑË,
+.squid:S2176"Rename this class.(Äß³Ø8ıî«ë,
+•squid:S1319"tThe type of the "arrayList" object should be an interface such as "List" rather than the implementation "ArrayList".(ŒÄî•ùÿÿÿÿ8ıî«ë,
+Psquid:S1172"/Remove this unused method parameter "activity".(ŒÄî•ùÿÿÿÿ8ıî«ë,
+Ÿsquid:UselessImportCheck"vRemove this unused import 'com.example.user.testrealmlistandrecviewtouchapp.ui.view.util.TasksListRecyclerViewGetter'.(ñğÿ8ıî«ë,
