@@ -157,3 +157,4 @@ public class TasksListRecyclerViewGetter {
 
 
 //https://medium.com/@fanfatal/android-swipe-menu-with-recyclerview-8f28a235ff28
+//https://stackoverflow.com/questions/35920584/android-how-to-catch-drop-action-of-itemtouchhelper-which-is-used-with-recycle
