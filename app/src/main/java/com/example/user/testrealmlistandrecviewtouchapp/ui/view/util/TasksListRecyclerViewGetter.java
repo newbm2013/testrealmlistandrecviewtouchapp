@@ -67,14 +67,27 @@ public class TasksListRecyclerViewGetter {
                                   RecyclerView.ViewHolder target) {
 
 
-                target.getAdapterPosition();
-                arrayList.set(target.getAdapterPosition(),
-                        arrayList.get(viewHolder.getAdapterPosition()));
-                arrayList.forEach((a)->System.out.print(a));
 
 
 
-                return true;
+                int i = target.getAdapterPosition();
+
+
+
+                int i2 = viewHolder.getAdapterPosition();
+
+
+
+                arrayList.set(i, arrayList.get(i2));
+                tasksListRecyclerViewAdapter.notifyItemMoved(i2, i);
+                String s = "";
+                for (int ii=0; ii<arrayList.size(); ii++ ) s += arrayList.get(ii);
+                Log.d("DTAG", "onMove: " + s);
+
+
+
+
+                return false;
             }
 
 
