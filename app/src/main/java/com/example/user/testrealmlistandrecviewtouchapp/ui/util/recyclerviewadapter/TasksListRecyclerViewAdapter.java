@@ -16,25 +16,25 @@ public class TasksListRecyclerViewAdapter
         extends RecyclerView.Adapter<TasksListRecyclerViewAdapter.ViewHolder> {
 
     ArrayList<String> arrayList;
-    TasksListRecyclerViewGetter tasksListRecyclerViewGetter;
+
 
 
     public TasksListRecyclerViewAdapter(ArrayList<String> arrayList, AppCompatActivity activity){
         this.arrayList = arrayList;
         //activity as context
-        tasksListRecyclerViewGetter = new TasksListRecyclerViewGetter(activity);
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, null, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText(arrayList.get(position));
+        holder.textView.setText("" + arrayList.get(position));
     }
 
     @Override
