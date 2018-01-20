@@ -26,23 +26,33 @@ public class MainTasksListsPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         tasksListRecyclerViewGetter = new TasksListRecyclerViewGetter(actvity);
         arrayListController = new ArrayListController();
-        View view = tasksListRecyclerViewGetter.getRecyclerView(container, arrayListController.getArrayList(position));
+        View view = tasksListRecyclerViewGetter
+                .getRecyclerView(container, arrayListController.getArrayList(position));
+        view.setTag(position);
         container.addView(view);
         return view;
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return 3;
     }
 
+
+    //these three methods need for good working add and delete views
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view.getClass() == object.getClass();
+        return view == (RecyclerView)object;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((RecyclerView) object);
+        // Remove viewpager_item.xml from ViewPager
+        ((ViewPager) container).removeView((RecyclerView) object);
+
+    }
+    @Override
+    public int getItemPosition(Object object){
+        return PagerAdapter.POSITION_NONE;
     }
 }
