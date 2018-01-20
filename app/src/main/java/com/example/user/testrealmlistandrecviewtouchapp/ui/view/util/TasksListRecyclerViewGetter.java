@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.testrealmlistandrecviewtouchapp.R;
@@ -41,6 +42,8 @@ public class TasksListRecyclerViewGetter {
         itemTouchHelper.attachToRecyclerView(tasksListRecyclerView);
         return tasksListRecyclerView;
     }
+
+
 
 
     @SuppressWarnings("all")
