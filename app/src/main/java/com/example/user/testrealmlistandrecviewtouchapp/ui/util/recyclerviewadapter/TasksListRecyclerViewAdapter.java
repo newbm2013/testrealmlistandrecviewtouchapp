@@ -10,11 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.user.testrealmlistandrecviewtouchapp.R;
-import com.example.user.testrealmlistandrecviewtouchapp.ui.view.util.TasksListRecyclerViewGetter;
-
 import java.util.ArrayList;
 
 
@@ -24,15 +20,14 @@ public class TasksListRecyclerViewAdapter
     ArrayList<String> arrayList;
     boolean addithionalItemViewPanelShowing = false;
     View viewWithShowingAdditionalItemViewPanel;
-    int normalHeight;
     View.OnClickListener onClickListener;
     int clickCount = 0;
 
 
 
-    Handler handler;
-    boolean handlerRun;
-    Runnable runnable;
+    private Handler handler;
+    private boolean handlerRun;
+    private Runnable runnable;
 
 
     public TasksListRecyclerViewAdapter(ArrayList<String> arrayList, AppCompatActivity activity) {
@@ -41,12 +36,10 @@ public class TasksListRecyclerViewAdapter
 
 
 
-        //activity as context
+
         onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-
-
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -67,12 +60,9 @@ public class TasksListRecyclerViewAdapter
                 runnable = new Runnable() {
                     @Override
                     public void run() {
-
-
                         if (clickCount == 1) {
                             Log.d("DTAG", "onClick: 1");
                         }
-
                         if (clickCount == 2) {
                             if (!addithionalItemViewPanelShowing) {
                                 //                    normalHeight = view.getHeight();
@@ -96,17 +86,10 @@ public class TasksListRecyclerViewAdapter
                                 addithionalItemViewPanelShowing = false;
                             }
                         }
-
-
                         clickCount=0;
                         handlerRun = false;
                     }
                 };
-
-
-
-
-
             }
         };
     }
@@ -117,7 +100,6 @@ public class TasksListRecyclerViewAdapter
         View view;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
         view.setOnClickListener(onClickListener);
-
         return new ViewHolder(view);
     }
 
