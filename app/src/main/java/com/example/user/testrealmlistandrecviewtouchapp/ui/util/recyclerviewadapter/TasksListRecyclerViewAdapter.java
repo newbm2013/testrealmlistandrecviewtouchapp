@@ -1,6 +1,5 @@
 package com.example.user.testrealmlistandrecviewtouchapp.ui.util.recyclerviewadapter;
 
-
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -20,76 +19,32 @@ public class TasksListRecyclerViewAdapter
     ArrayList<String> arrayList;
     boolean addithionalItemViewPanelShowing = false;
     View viewWithShowingAdditionalItemViewPanel;
-    View.OnClickListener onClickListener;
-    int clickCount = 0;
-
-
-
-    private Handler handler;
-    private boolean handlerRun;
-    private Runnable runnable;
+    View.OnLongClickListener onLongClickListener;
 
 
     public TasksListRecyclerViewAdapter(ArrayList<String> arrayList, AppCompatActivity activity) {
         this.arrayList = arrayList;
-        handler = new Handler();
 
-
-
-
-        onClickListener = new View.OnClickListener() {
+        onLongClickListener = new View.OnLongClickListener() {
             @Override
-            public void onClick(final View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        clickCount++;
-                    }
-                }).start();
+            public boolean onLongClick(final View view) {
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!handlerRun){
-                            handlerRun = true;
-                            handler.postDelayed(runnable, 170);
-                        }
+                if (!addithionalItemViewPanelShowing) {
+                    view.findViewById(R.id.ll_additional_item_view_panel).setVisibility(View.VISIBLE);
+                    addithionalItemViewPanelShowing = true;
+                    viewWithShowingAdditionalItemViewPanel = view;
+                } else if (addithionalItemViewPanelShowing) {
+                    viewWithShowingAdditionalItemViewPanel
+                            .findViewById(R.id.ll_additional_item_view_panel).setVisibility(View.GONE);
+                    if (!view.equals(viewWithShowingAdditionalItemViewPanel)) {
+                        view.findViewById(R.id.ll_additional_item_view_panel).setVisibility(View.VISIBLE);
+                        addithionalItemViewPanelShowing = true;
+                        viewWithShowingAdditionalItemViewPanel = view;
+                        return false;
                     }
-                }).start();
-
-                runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        if (clickCount == 1) {
-                            Log.d("DTAG", "onClick: 1");
-                        }
-                        if (clickCount == 2) {
-                            if (!addithionalItemViewPanelShowing) {
-                                //                    normalHeight = view.getHeight();
-                                //                    view.setMinimumHeight(normalHeight*2);
-                                view.findViewById(R.id.ll_additional_item_view_panel).setVisibility(View.VISIBLE);
-                                addithionalItemViewPanelShowing = true;
-                                viewWithShowingAdditionalItemViewPanel = view;
-                            } else if (addithionalItemViewPanelShowing) {
-                                //                    viewWithShowingAdditionalItemViewPanel.setMinimumHeight(normalHeight);
-                                viewWithShowingAdditionalItemViewPanel
-                                        .findViewById(R.id.ll_additional_item_view_panel).setVisibility(View.GONE);
-                                if (!view.equals(viewWithShowingAdditionalItemViewPanel)) {
-                                    //                        view.setMinimumHeight(normalHeight*2);
-                                    view.findViewById(R.id.ll_additional_item_view_panel).setVisibility(View.VISIBLE);
-                                    addithionalItemViewPanelShowing = true;
-                                    viewWithShowingAdditionalItemViewPanel = view;
-                                    clickCount=0;
-                                    handlerRun = false;
-                                    return;
-                                }
-                                addithionalItemViewPanelShowing = false;
-                            }
-                        }
-                        clickCount=0;
-                        handlerRun = false;
-                    }
-                };
+                    addithionalItemViewPanelShowing = false;
+                }
+                return false;
             }
         };
     }
@@ -99,7 +54,7 @@ public class TasksListRecyclerViewAdapter
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
-        view.setOnClickListener(onClickListener);
+        view.setOnLongClickListener(onLongClickListener);
         return new ViewHolder(view);
     }
 

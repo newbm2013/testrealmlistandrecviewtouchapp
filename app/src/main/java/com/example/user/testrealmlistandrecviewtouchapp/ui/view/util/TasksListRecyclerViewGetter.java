@@ -50,8 +50,8 @@ public class TasksListRecyclerViewGetter {
     private ItemTouchHelper.Callback createHelperCallback() {
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP| ItemTouchHelper.DOWN,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                ItemTouchHelper.UP| ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
+                0){
 
             int dragFrom = -1;
             int dragTo = -1;
@@ -60,6 +60,7 @@ public class TasksListRecyclerViewGetter {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                                   RecyclerView.ViewHolder target) {
+
 
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
@@ -72,12 +73,6 @@ public class TasksListRecyclerViewGetter {
             }
 
             private void reallyMoved(int from, int to) {arrayList.add(to, arrayList.remove(from));}
-
-            @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                int position = viewHolder.getAdapterPosition();
-                arrayList.remove(position);
-            }
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -94,7 +89,14 @@ public class TasksListRecyclerViewGetter {
                 }
                 dragFrom = dragTo = -1;
             }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            }
         };
+
+
+
         return simpleItemTouchCallback;
     }
 }
