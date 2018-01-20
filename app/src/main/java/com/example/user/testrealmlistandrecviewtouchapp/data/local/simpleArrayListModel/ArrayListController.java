@@ -13,9 +13,9 @@ public class ArrayListController {
         arrayList2 = new ArrayList<>();
         arrayList3 = new ArrayList<>();
 
-        for (int i = 0; i<100; i ++){arrayList.add("item " + i);}
-        for (int i = 100; i<200; i ++){arrayList2.add("item " + i);}
-        for (int i = 200; i<300; i ++){arrayList3.add("item " + i);}
+        for (int i = 1; i<11; i ++){arrayList.add(" " + i);}
+        for (int i = 11; i<50; i ++){arrayList2.add(" " + i);}
+        for (int i = 51; i<100; i ++){arrayList3.add(" " + i);}
     }
 
 
