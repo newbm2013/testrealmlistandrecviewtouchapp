@@ -3,6 +3,7 @@ package com.example.user.testrealmlistandrecviewtouchapp.ui.view;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.user.testrealmlistandrecviewtouchapp.R;
 import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RList;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         mainTasksListsViewPager.setAdapter(mainTasksListsPagerAdapter);
 
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(1).build();
+        RealmConfiguration config = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().schemaVersion(1).build();
         Realm.setDefaultConfiguration(config);
 
         realm = Realm.getDefaultInstance();
@@ -42,56 +43,50 @@ public class MainActivity extends AppCompatActivity {
             public void execute(Realm realm) {
 
 
-                if (realm.where(RListsContainer.class).findFirst() == null){
-                    RListsContainer listsContainer = realm.createObject(RListsContainer.class);
+//                if (realm.where(RListsContainer.class).findFirst() == null) {
+//                    RListsContainer listsContainer = realm.createObject(RListsContainer.class);
+//                }
+
+
+//                final RList<RTask> list = realm.createObject(RList.class);
+//                list.setId(System.currentTimeMillis());
+//                list.setName("list 1");
+//
+//
+//                final RList<RTask> list2 = realm.createObject(RList.class);
+//                list2.setId(System.currentTimeMillis());
+//                list2.setName("list 2");
+
+                final RListsContainer rListsContainer = realm.where(RListsContainer.class).findFirst();
+
+//
+//                rListsContainer.realmListContainer.add(list);
+//                rListsContainer.realmListContainer.add(list2);
+
+
+                final RealmModel rList = rListsContainer.realmListContainer.get(0);
+//                final RealmModel rList2 = rListsContainer.realmListContainer.get(1);
+
+
+                for (int i = 0; i < 1000; i++) {
+
+
+                    RTask task = realm.createObject(RTask.class);
+                    task.setId(System.currentTimeMillis());
+                    task.setName("task n " + i);
+                   ((RList<RTask>) rList).tasks.add(task);
+
                 }
-
-
-
-
-                final RList<RTask> list = realm.createObject(RList.class);
-                list.setId(System.currentTimeMillis());
-                list.setName("list 1");
-                list.tasks //todo need setTasks
-
-                final RList<RTask> list2 = realm.createObject(RList.class);
-                list2.setId(System.currentTimeMillis());
-                list2.setName("list 2");
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-
-                        realm.where(RListsContainer.class).findFirst().realmListContainer.add(list);
-                        realm.where(RListsContainer.class).findFirst().realmListContainer.add(list2);
-
-                    }
-                });
             }
         });
 
+//
 
-        for (int i = 0; i<100; i++){
-            final int finalI = i;
 
-            final RListsContainer rListsContainer = realm.where(RListsContainer.class).findFirst();
-//            final RList<RTask> rList = rListsContainer.realmListContainer.get(0);
 
-            final RealmModel rList = rListsContainer.realmListContainer.get(0);
-            final RealmModel rList2 = rListsContainer.realmListContainer.get(1);
 
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    RTask task = realm.createObject(RTask.class);
-                    task.setId(System.currentTimeMillis());
-                    task.setName("task " + finalI);
 
-                    if (finalI/2==0)  ((RList<RTask>) rList).tasks.add(task);
-                    else ((RList<RTask>) rList2).tasks.add(task);
-                }
-            });
-        }
+
 
 
 

@@ -10,20 +10,32 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.user.testrealmlistandrecviewtouchapp.R;
+import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RList;
+import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RListsContainer;
+import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RTask;
+
 import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 
 
 public class TasksListRecyclerViewAdapter
         extends RecyclerView.Adapter<TasksListRecyclerViewAdapter.ViewHolder> {
 
-    ArrayList<String> arrayList;
+//    ArrayList<String> arrayList;
     boolean addithionalItemViewPanelShowing = false;
     View viewWithShowingAdditionalItemViewPanel;
     View.OnLongClickListener onLongClickListener;
+    RealmList rlistContainer;
 
 
     public TasksListRecyclerViewAdapter(ArrayList<String> arrayList, AppCompatActivity activity) {
-        this.arrayList = arrayList;
+//        this.arrayList = arrayList;
+
+        Realm realm = Realm.getDefaultInstance();
+        rlistContainer = realm.where(RListsContainer.class).findFirst().realmListContainer;
+
 
         onLongClickListener = new View.OnLongClickListener() {
             @Override
@@ -60,7 +72,8 @@ public class TasksListRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText("" + arrayList.get(position));
+        RTask task = (RTask) ((RList)rlistContainer.get(0)).tasks.get(position);
+        holder.textView.setText("" + task.getName());
         holder.llAdditionalPanel.setVisibility(View.GONE);
     }
 
@@ -71,7 +84,7 @@ public class TasksListRecyclerViewAdapter
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return ((RList)rlistContainer.get(0)).tasks.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

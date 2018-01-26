@@ -11,10 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.testrealmlistandrecviewtouchapp.R;
+import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RList;
+import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RListsContainer;
+import com.example.user.testrealmlistandrecviewtouchapp.data.local.simpleArrayListModel.RTask;
 import com.example.user.testrealmlistandrecviewtouchapp.ui.util.recyclerviewadapter.TasksListRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import io.realm.Realm;
 
 public class TasksListRecyclerViewGetter {
 
@@ -53,6 +58,15 @@ public class TasksListRecyclerViewGetter {
                 ItemTouchHelper.UP| ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT,
                 0){
 
+            Realm realm = Realm.getDefaultInstance();
+
+
+            RListsContainer rListsContainer = realm.where(RListsContainer.class).findFirst();
+
+
+
+            RList<RTask> rList = (RList<RTask>) rListsContainer.realmListContainer.get(0);
+
             int dragFrom = -1;
             int dragTo = -1;
 
@@ -72,20 +86,30 @@ public class TasksListRecyclerViewGetter {
                 return true;
             }
 
-            private void reallyMoved(int from, int to) {arrayList.add(to, arrayList.remove(from));}
+            private void reallyMoved(final int from, final int to) {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+//                        rList.tasks.add(to, rList.tasks.remove(from));
+                        rList.tasks.add(to, rList.tasks.remove(rList.tasks.size() - 1));
+                    }
+                });
+            }
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
 
+
+
                 if(dragFrom != -1 && dragTo != -1 && dragFrom != dragTo) {
+                    long time = System.currentTimeMillis();
                     reallyMoved(dragFrom, dragTo);
-                    if (!arrayList.equals(arrayListCopy)){
-                        Log.d("DTAG", "from index " + dragFrom + " ,to index " + dragTo);
-                        Log.d("DTAG", "OLD " + Arrays.toString(((ArrayList)arrayListCopy).toArray()));
-                        Log.d("DTAG", "NEW " + Arrays.toString(arrayList.toArray()));
-                        arrayListCopy=arrayList.clone();
-                    }
+                    Log.d("DTAG", "clearView: " + (System.currentTimeMillis() - time));
+
+
+
+
                 }
                 dragFrom = dragTo = -1;
             }
