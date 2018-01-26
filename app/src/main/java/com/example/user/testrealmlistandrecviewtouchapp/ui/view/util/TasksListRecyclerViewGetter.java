@@ -49,8 +49,6 @@ public class TasksListRecyclerViewGetter {
     }
 
 
-
-
     @SuppressWarnings("all")
     private ItemTouchHelper.Callback createHelperCallback() {
 
@@ -59,17 +57,11 @@ public class TasksListRecyclerViewGetter {
                 0){
 
             Realm realm = Realm.getDefaultInstance();
-
-
             RListsContainer rListsContainer = realm.where(RListsContainer.class).findFirst();
-
-
-
             RList<RTask> rList = (RList<RTask>) rListsContainer.realmListContainer.get(0);
 
             int dragFrom = -1;
             int dragTo = -1;
-
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
@@ -90,8 +82,7 @@ public class TasksListRecyclerViewGetter {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-//                        rList.tasks.add(to, rList.tasks.remove(from));
-                        rList.tasks.add(to, rList.tasks.remove(rList.tasks.size() - 1));
+                        rList.tasks.add(to, rList.tasks.remove(from));
                     }
                 });
             }
@@ -105,12 +96,7 @@ public class TasksListRecyclerViewGetter {
                 if(dragFrom != -1 && dragTo != -1 && dragFrom != dragTo) {
                     long time = System.currentTimeMillis();
                     reallyMoved(dragFrom, dragTo);
-                    Log.d("DTAG", "clearView: " + (System.currentTimeMillis() - time));
-
-
-
-
-                }
+                                  }
                 dragFrom = dragTo = -1;
             }
 
@@ -118,8 +104,6 @@ public class TasksListRecyclerViewGetter {
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
             }
         };
-
-
 
         return simpleItemTouchCallback;
     }
